@@ -8,6 +8,138 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
+<!-- 加载界面 -->
+<div id="loading-overlay">
+  <div class="loading-content">
+    <div class="loading-mushroom">🍄</div>
+    <div class="loading-text">蘑菇小镇加载中</div>
+    <div class="loading-progress">
+      <div class="loading-bar" id="loading-bar"></div>
+    </div>
+    <div class="loading-percent" id="loading-percent">0%</div>
+  </div>
+</div>
+
+<script>
+// 模拟加载进度
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.getElementById('loading-overlay');
+  const loadingBar = document.getElementById('loading-bar');
+  const loadingPercent = document.getElementById('loading-percent');
+  
+  let progress = 0;
+  const interval = setInterval(function() {
+    progress += Math.floor(Math.random() * 10) + 5; // 随机增加5-15
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      
+      // 加载完成，淡出loading界面
+      setTimeout(function() {
+        overlay.style.animation = 'fadeOut 0.8s forwards';
+        // 启动背景音乐等后续操作
+        startBackgroundMusic();
+      }, 500);
+    }
+    
+    // 更新进度条和百分比
+    loadingBar.style.width = progress + '%';
+    loadingPercent.textContent = progress + '%';
+  }, 200);
+  
+  // 背景音乐启动函数（从你原来的代码里提取）
+  function startBackgroundMusic() {
+    const audio = document.getElementById('bgMusic');
+    if (audio) {
+      // 这里可以放你原来的音乐播放逻辑
+      console.log('音乐准备就绪');
+    }
+  }
+});
+</script>
+
+<style>
+/* 加载界面样式 - 暗红色背景 */
+#loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #8B0000;  /* 暗红色 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  font-family: 'Jingling', 'Microsoft YaHei', sans-serif;
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+  max-width: 400px;
+  width: 90%;
+}
+
+.loading-mushroom {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.loading-text {
+  font-size: 24px;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 进度条容器 */
+.loading-progress {
+  width: 100%;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 进度条 */
+.loading-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #FF0000, #FFFFFF, #FF0000);
+  border-radius: 10px;
+  transition: width 0.2s ease-out;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* 百分比数字 */
+.loading-percent {
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 
+    0 0 10px #FF0000,
+    0 0 20px #FFFFFF;
+  font-family: 'HomuraBold', 'Jingling', sans-serif;
+}
+
+/* 蘑菇动画 */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* 淡出动画 */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+</style>
     <!-- 蘑菇小镇的内容卡片 -->
     <div class="magic-card">
         <!-- 漂浮的蘑菇装饰（无包裹） -->
