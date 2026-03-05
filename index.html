@@ -6,398 +6,195 @@
     <title>蘑菇小镇入住计划（mushroomandhunger.com）</title>
     <!-- 链接外部CSS文件 -->
     <link rel="stylesheet" href="styles/style.css">
+    <style>
+    /* 加载界面样式 - 暗红色背景 */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #8B0000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      font-family: 'Jingling', 'Microsoft YaHei', sans-serif;
+    }
+    
+    .loading-content {
+      text-align: center;
+      color: white;
+      max-width: 400px;
+      width: 90%;
+    }
+    
+    .loading-mushroom {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: bounce 1s ease-in-out infinite;
+    }
+    
+    .loading-text {
+      font-size: 24px;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .loading-progress {
+      width: 100%;
+      height: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #FF0000, #FFFFFF, #FF0000);
+      border-radius: 10px;
+      transition: width 0.2s ease-out;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    
+    .loading-percent {
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 
+        0 0 10px #FF0000,
+        0 0 20px #FFFFFF;
+      font-family: 'HomuraBold', 'Jingling', sans-serif;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+    </style>
 </head>
 <body>
-<!-- 加载界面 -->
-<div id="loading-overlay">
-  <div class="loading-content">
-    <div class="loading-mushroom">🍄</div>
-    <div class="loading-text">蘑菇小镇加载中</div>
-    <div class="loading-progress">
-      <div class="loading-bar" id="loading-bar"></div>
-    </div>
-    <div class="loading-percent" id="loading-percent">0%</div>
-  </div>
-</div>
-
-<script>
-// 模拟加载进度
-document.addEventListener('DOMContentLoaded', function() {
-  const overlay = document.getElementById('loading-overlay');
-  const loadingBar = document.getElementById('loading-bar');
-  const loadingPercent = document.getElementById('loading-percent');
-  
-  let progress = 0;
-  const interval = setInterval(function() {
-    progress += Math.floor(Math.random() * 10) + 5; // 随机增加5-15
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(interval);
-      
-      // 加载完成，淡出loading界面
-      setTimeout(function() {
-        overlay.style.animation = 'fadeOut 0.8s forwards';
-        // 启动背景音乐等后续操作
-        startBackgroundMusic();
-      }, 500);
-    }
-    
-    // 更新进度条和百分比
-    loadingBar.style.width = progress + '%';
-    loadingPercent.textContent = progress + '%';
-  }, 200);
-  
-  // 背景音乐启动函数（从你原来的代码里提取）
-  function startBackgroundMusic() {
-    const audio = document.getElementById('bgMusic');
-    if (audio) {
-      // 这里可以放你原来的音乐播放逻辑
-      console.log('音乐准备就绪');
-    }
-  }
-});
-</script>
-
-<style>
-/* 加载界面样式 - 暗红色背景 */
-#loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #8B0000;  /* 暗红色 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-  font-family: 'Jingling', 'Microsoft YaHei', sans-serif;
-}
-
-.loading-content {
-  text-align: center;
-  color: white;
-  max-width: 400px;
-  width: 90%;
-}
-
-.loading-mushroom {
-  font-size: 80px;
-  margin-bottom: 20px;
-  animation: bounce 1s ease-in-out infinite;
-}
-
-.loading-text {
-  font-size: 24px;
-  margin-bottom: 30px;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* 进度条容器 */
-.loading-progress {
-  width: 100%;
-  height: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-/* 进度条 */
-.loading-bar {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #FF0000, #FFFFFF, #FF0000);
-  border-radius: 10px;
-  transition: width 0.2s ease-out;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-}
-
-/* 百分比数字 */
-.loading-percent {
-  font-size: 36px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 
-    0 0 10px #FF0000,
-    0 0 20px #FFFFFF;
-  font-family: 'HomuraBold', 'Jingling', sans-serif;
-}
-
-/* 蘑菇动画 */
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-/* 淡出动画 */
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-</style>
-    <!-- 蘑菇小镇的内容卡片 -->
-    <div class="magic-card">
-        <!-- 漂浮的蘑菇装饰（无包裹） -->
-        <span class="mushroom"></span>
-        <span class="mushroom" style="animation-delay: 0.5s;"></span>
-        <span class="mushroom" style="animation-delay: 1s;"></span>
-        <span class="mushroom" style="animation-delay: 1.5s;"></span>
-        
-        <!-- 主标题 - 每个字独立颜色，去掉emoji -->
-        <h1 class="glowing-title">
-            <span class="char1">蘑</span>
-            <span class="char2">菇</span>
-            <span class="char3">蘑</span>
-            <span class="char4">菇</span>
-        </h1>
-        
-        <!-- 欢迎文字 -->
-        <p class="welcome-text">
-            你好！幸运儿！欢迎来到蘑菇小镇！
-        </p>
-        
-        <!-- 自定义文案 -->
-        <p class="magic-text">
-            嘘，不要走<br>体验无法逃离的幸福和喜悦吧
-        </p>
-        
-        <!-- 按钮组（红绿蓝高饱和，无白边） -->
-        <div class="button-group">
-            <a href="#" class="magic-button red-button">小镇中心</a>
-            <a href="#" class="magic-button green-button">小镇历史</a>
-            <a href="#" class="magic-button blue-button">蘑菇图鉴</a>
-        </div>
-        
-        <!-- 底部闪烁蘑菇星星 -->
-        <div class="sparkles">
-            <span class="sparkle"></span>
-            <span class="sparkle" style="animation-delay: 0.2s;"></span>
-            <span class="sparkle" style="animation-delay: 0.4s;"></span>
-            <span class="sparkle" style="animation-delay: 0.6s;"></span>
-            <span class="sparkle" style="animation-delay: 0.8s;"></span>
+    <!-- 加载界面 -->
+    <div id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-mushroom">🍄</div>
+            <div class="loading-text">蘑菇小镇加载中</div>
+            <div class="loading-progress">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <div class="loading-percent" id="loading-percent">0%</div>
         </div>
     </div>
-<!-- 故障闪过容器 -->
-<div class="glitch-flash-container" id="glitchContainer"></div>
 
-<script>
-// 故障闪过效果触发器
-function createGlitch() {
-    const container = document.getElementById('glitchContainer');
-    if (!container) return;
-    
-    // 清除旧的故障元素
-    container.innerHTML = '';
-    
-    // 随机选择故障类型
-    const glitchType = Math.floor(Math.random() * 5);
-    
-    switch(glitchType) {
-        case 0: // 水平故障条
-            for(let i = 0; i < 3; i++) {
-                const flash = document.createElement('div');
-                flash.className = 'glitch-flash';
-                flash.style.top = Math.random() * 100 + '%';
-                flash.style.animationDelay = (i * 0.1) + 's';
-                container.appendChild(flash);
-            }
-            break;
+    <!-- 主内容容器（loading结束后显示） -->
+    <div class="main-content" style="opacity: 0; transition: opacity 0.5s;">
+        <!-- 登录/注册选择界面 -->
+        <div id="authChoice" class="auth-choice">
+            <h2 class="auth-title">🍄 欢迎来到蘑菇小镇 🍄</h2>
+            <p class="auth-subtitle">请选择</p>
+            <div class="auth-buttons">
+                <button id="showLoginBtn" class="auth-btn login-choice">登录</button>
+                <button id="showRegisterBtn" class="auth-btn register-choice">注册</button>
+            </div>
+        </div>
+        
+        <!-- 登录表单（初始隐藏） -->
+        <div id="loginForm" class="auth-form" style="display: none;">
+            <h2 class="auth-title">🔐 登录蘑菇小镇</h2>
+            <input type="text" id="loginUsername" class="auth-input" placeholder="输入你的名字" maxlength="20">
+            <div class="auth-form-buttons">
+                <button id="loginSubmitBtn" class="auth-btn login-choice">登录</button>
+                <button id="backFromLogin" class="auth-btn back-btn">返回</button>
+            </div>
+            <div id="loginMessage" class="auth-message"></div>
+        </div>
+        
+        <!-- 注册表单（初始隐藏） -->
+        <div id="registerForm" class="auth-form" style="display: none;">
+            <h2 class="auth-title">📝 注册蘑菇小镇</h2>
+            <input type="text" id="registerUsername" class="auth-input" placeholder="输入你的名字" maxlength="20">
+            <div class="auth-form-buttons">
+                <button id="registerSubmitBtn" class="auth-btn register-choice">注册</button>
+                <button id="backFromRegister" class="auth-btn back-btn">返回</button>
+            </div>
+            <div id="registerMessage" class="auth-message"></div>
+        </div>
+        
+        <!-- 蘑菇小镇内容（初始隐藏） -->
+        <div id="mushroomContent" style="display: none;">
+            <!-- 用户登录模块（已登录状态显示） -->
+            <div class="user-module">
+                <div id="userLoggedIn" class="user-logged">
+                    <span class="welcome-text">欢迎回来，</span>
+                    <span id="displayUsername" class="username"></span>
+                    <span class="mushroom-emoji">🍄</span>
+                    <button id="logoutBtn" class="logout-btn">[退出]</button>
+                </div>
+            </div>
             
-        case 1: // 垂直故障条
-            for(let i = 0; i < 3; i++) {
-                const flash = document.createElement('div');
-                flash.className = 'glitch-flash-vertical';
-                flash.style.left = Math.random() * 100 + '%';
-                flash.style.animationDelay = (i * 0.1) + 's';
-                container.appendChild(flash);
-            }
-            break;
-            
-        case 2: // RGB故障块
-            for(let i = 0; i < 5; i++) {
-                const block = document.createElement('div');
-                block.className = 'glitch-block';
-                block.style.top = Math.random() * 80 + '%';
-                block.style.left = Math.random() * 80 + '%';
-                block.style.width = (100 + Math.random() * 200) + 'px';
-                block.style.height = (50 + Math.random() * 100) + 'px';
-                block.style.background = `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},0.1)`;
-                block.style.animationDelay = (i * 0.05) + 's';
-                container.appendChild(block);
-            }
-            break;
-            
-        case 3: // 像素故障
-            const pixel = document.createElement('div');
-            pixel.className = 'pixel-glitch';
-            container.appendChild(pixel);
-            
-            // 同时给标题添加文字故障
-            const title = document.querySelector('.glowing-title');
-            if(title) {
-                title.style.animation = 'textGlitch 0.3s';
-                setTimeout(() => {
-                    title.style.animation = '';
-                }, 300);
-            }
-            break;
-            
-        case 4: // 全屏闪烁
-            document.body.style.backgroundColor = 'rgba(255,0,255,0.1)';
-            document.body.style.transition = 'background-color 0.1s';
-            setTimeout(() => {
-                document.body.style.backgroundColor = '';
-            }, 100);
-            
-            // 添加几个快速闪过的条
-            for(let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    const flash = document.createElement('div');
-                    flash.className = 'glitch-flash';
-                    flash.style.top = Math.random() * 100 + '%';
-                    flash.style.animation = 'glitchFlash 0.15s ease-out forwards';
-                    container.appendChild(flash);
-                }, i * 30);
-            }
-            break;
-    }
+            <!-- 蘑菇小镇的内容卡片 -->
+            <div class="magic-card">
+                <span class="mushroom"></span>
+                <span class="mushroom" style="animation-delay: 0.5s;"></span>
+                <span class="mushroom" style="animation-delay: 1s;"></span>
+                <span class="mushroom" style="animation-delay: 1.5s;"></span>
+                
+                <h1 class="glowing-title">
+                    <span class="char1">蘑</span>
+                    <span class="char2">菇</span>
+                    <span class="char3">蘑</span>
+                    <span class="char4">菇</span>
+                </h1>
+                
+                <p class="welcome-text">
+                    你好！幸运儿！欢迎来到蘑菇小镇！
+                </p>
+                
+                <p class="magic-text">
+                    嘘，不要走<br>体验无法逃离的幸福和喜悦吧
+                </p>
+                
+                <div class="button-group">
+                    <a href="#" class="magic-button red-button">小镇中心</a>
+                    <a href="#" class="magic-button green-button">小镇历史</a>
+                    <a href="#" class="magic-button blue-button">蘑菇图鉴</a>
+                </div>
+                
+                <div class="sparkles">
+                    <span class="sparkle"></span>
+                    <span class="sparkle" style="animation-delay: 0.2s;"></span>
+                    <span class="sparkle" style="animation-delay: 0.4s;"></span>
+                    <span class="sparkle" style="animation-delay: 0.6s;"></span>
+                    <span class="sparkle" style="animation-delay: 0.8s;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    // 一段时间后清除故障
-    setTimeout(() => {
-        container.innerHTML = '';
-    }, 1000);
-}
-
-// 随机触发故障
-function randomGlitch() {
-    // 随机间隔触发故障（2-8秒之间）
-    const interval = 2000 + Math.random() * 6000;
+    <!-- 故障闪过容器 -->
+    <div class="glitch-flash-container" id="glitchContainer"></div>
     
-    setTimeout(() => {
-        createGlitch();
-        randomGlitch(); // 递归调用，持续触发
-    }, interval);
-}
-
-// 页面加载完成后开始触发故障
-document.addEventListener('DOMContentLoaded', () => {
-    randomGlitch();
-});
-
-// 也可以鼠标移动时偶尔触发
-let lastGlitchTime = 0;
-document.addEventListener('mousemove', () => {
-    const now = Date.now();
-    // 每秒最多触发一次
-    if(now - lastGlitchTime > 1000 && Math.random() < 0.01) {
-        lastGlitchTime = now;
-        createGlitch();
-    }
-});
-
-// 点击时触发一次强故障
-document.addEventListener('click', () => {
-    for(let i = 0; i < 3; i++) {
-        setTimeout(() => createGlitch(), i * 100);
-    }
-});
-</script>
-<!-- 背景音乐（无限循环） -->
-<audio id="bgMusic" loop preload="auto">
-  <source src="images/MushroomBorn.MP3" type="audio/mpeg">
-  您的浏览器不支持音频播放。
-</audio>
-
-<!-- 音乐控制按钮 -->
-<div class="music-control">
-  <button id="musicToggle" class="music-btn">🔊 音乐</button>
-</div>
-
-<script>
-// 背景音乐控制
-document.addEventListener('DOMContentLoaded', function() {
-  const audio = document.getElementById('bgMusic');
-  const musicBtn = document.getElementById('musicToggle');
-  
-  if (audio && musicBtn) {
-    // 设置音量为50%，不会太吵
-    audio.volume = 0.5;
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="images/MushroomBorn.MP3" type="audio/mpeg">
+    </audio>
     
-    // 第一次点击页面任意位置时自动播放
-    const playOnFirstClick = function() {
-      audio.play().then(() => {
-        musicBtn.innerHTML = '🔊 音乐';
-        musicBtn.classList.remove('muted');
-        console.log('🎵 蘑菇音乐开始播放');
-      }).catch(e => {
-        console.log('播放失败:', e);
-        musicBtn.innerHTML = '⚠️ 点击播放';
-      });
-      document.removeEventListener('click', playOnFirstClick);
-    };
-    document.addEventListener('click', playOnFirstClick, { once: true });
+    <!-- 音乐控制按钮 -->
+    <div class="music-control">
+        <button id="musicToggle" class="music-btn">🔊 音乐</button>
+    </div>
     
-    // 点击按钮切换播放/暂停
-    musicBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      if (audio.paused) {
-        audio.play();
-        musicBtn.innerHTML = '🔊 音乐';
-        musicBtn.classList.remove('muted');
-      } else {
-        audio.pause();
-        musicBtn.innerHTML = '🔇 静音';
-        musicBtn.classList.add('muted');
-      }
-    });
-    
-    // 音乐播放结束时自动重新开始（loop属性已经处理了）
-    audio.addEventListener('ended', function() {
-      console.log('🔄 音乐重新开始循环');
-    });
-  }
-});
-</script>
-
-<style>
-/* 音乐控制按钮样式 */
-.music-control {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 10000;
-}
-
-.music-btn {
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: 2px solid #00FF00;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-family: 'Jingling', 'Microsoft YaHei', sans-serif;
-  cursor: pointer;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-}
-
-.music-btn:hover {
-  background: rgba(0, 255, 0, 0.3);
-  transform: scale(1.1);
-  box-shadow: 0 0 25px #00FF00;
-}
-
-.music-btn.muted {
-  opacity: 0.6;
-  border-color: #666;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-}
-</style>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
