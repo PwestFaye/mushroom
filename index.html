@@ -175,5 +175,97 @@ document.addEventListener('click', () => {
     }
 });
 </script>
+<!-- 背景音乐（无限循环） -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="images/MushroomBorn.MP3" type="audio/mpeg">
+  您的浏览器不支持音频播放。
+</audio>
+
+<!-- 音乐控制按钮 -->
+<div class="music-control">
+  <button id="musicToggle" class="music-btn">🔊 音乐</button>
+</div>
+
+<script>
+// 背景音乐控制
+document.addEventListener('DOMContentLoaded', function() {
+  const audio = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicToggle');
+  
+  if (audio && musicBtn) {
+    // 设置音量为50%，不会太吵
+    audio.volume = 0.5;
+    
+    // 第一次点击页面任意位置时自动播放
+    const playOnFirstClick = function() {
+      audio.play().then(() => {
+        musicBtn.innerHTML = '🔊 音乐';
+        musicBtn.classList.remove('muted');
+        console.log('🎵 蘑菇音乐开始播放');
+      }).catch(e => {
+        console.log('播放失败:', e);
+        musicBtn.innerHTML = '⚠️ 点击播放';
+      });
+      document.removeEventListener('click', playOnFirstClick);
+    };
+    document.addEventListener('click', playOnFirstClick, { once: true });
+    
+    // 点击按钮切换播放/暂停
+    musicBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (audio.paused) {
+        audio.play();
+        musicBtn.innerHTML = '🔊 音乐';
+        musicBtn.classList.remove('muted');
+      } else {
+        audio.pause();
+        musicBtn.innerHTML = '🔇 静音';
+        musicBtn.classList.add('muted');
+      }
+    });
+    
+    // 音乐播放结束时自动重新开始（loop属性已经处理了）
+    audio.addEventListener('ended', function() {
+      console.log('🔄 音乐重新开始循环');
+    });
+  }
+});
+</script>
+
+<style>
+/* 音乐控制按钮样式 */
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+}
+
+.music-btn {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 2px solid #00FF00;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-family: 'Jingling', 'Microsoft YaHei', sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.music-btn:hover {
+  background: rgba(0, 255, 0, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #00FF00;
+}
+
+.music-btn.muted {
+  opacity: 0.6;
+  border-color: #666;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+</style>
 </body>
 </html>
