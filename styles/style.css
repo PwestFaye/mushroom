@@ -43,7 +43,7 @@ body {
     background-attachment: fixed;
     
     /* 备选背景色（图片加载不出来时显示） */
-    background-color: #8B4513;
+    background-color: #8B3A3A;
     
     position: relative;
 }
